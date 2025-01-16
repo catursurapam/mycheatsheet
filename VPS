@@ -19,3 +19,68 @@ webserver settings -> ssl certificates -> auto SSL -> centang cpanel saja -> ins
 tips laravel :
 cari route tertentu 
 php artisan route:list | findstr /C:"notifications"
+
+
+
+nginx :
+cara setting web pakai SSL yang di generate default lets encrypt apache :
+
+1. **Check and Correct Configuration Files:**
+   - Ensure that every server block using `listen ... ssl` has `ssl_certificate` and `ssl_certificate_key` directives properly defined.
+   - Verify that there are no syntax errors in your Nginx configuration files.
+
+2. **Verify SSL Certificate and Key Paths:**
+   - Confirm that the paths to your SSL certificate and key files are correct.
+   - Ensure that Nginx has read access to these files:
+     ```bash
+     sudo chown root:nginx /etc/nginx/ssl/*
+     sudo chmod 640 /etc/nginx/ssl/*
+     ```
+
+3. **SELinux Configuration:**
+   - Check if SELinux is enforcing and adjust contexts if necessary:
+     ```bash
+     sudo restorecon -R /etc/nginx/ssl/
+     ```
+
+4. **Firewall Settings:**
+   - Ensure that port 8080 is open in the firewall:
+     ```bash
+     sudo firewall-cmd --permanent --add-port=8080/tcp
+     sudo firewall-cmd --reload
+     ```
+
+5. **Disable Conflicting Server Blocks:**
+   - If the default configuration file is causing conflicts, disable it:
+     ```bash
+     sudo mv /etc/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf.disabled
+     ```
+
+6. **Test Nginx Configuration:**
+   - Run the following command to test the configuration:
+     ```bash
+     sudo nginx -t
+     ```
+
+7. **Reload Nginx:**
+   - After successful testing, reload Nginx:
+     ```bash
+     sudo systemctl reload nginx
+     ```
+
+8. **Verify Apache Configuration:**
+   - Ensure Apache is not listening on port 8080 to avoid conflicts.
+
+9. **Access Your Site:**
+   - Test accessing your site using:
+     ```
+     https://domain.com:8080
+     ```
+
+10. **Check Error Logs:**
+    - If issues persist, check Nginx error logs for more details:
+      ```bash
+      sudo tail -f /var/log/nginx/error.log
+      ```
+
+By following these steps, you should be able to resolve the configuration error and successfully run Nginx on port 8080 with SSL.
