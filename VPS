@@ -1,0 +1,21 @@
+--------- laravel
+apache :
+apache/conf.d/vhosts file untuk pointing domain ke file web yang ingin di deploy ( SSL dan non SSL )
+nama file : domain.ssl.conf atau domain.conf
+
+note : kalau sudah di setting seperti diatas, file vhosts sudah di config namun tetap mendapatkan 404 not found pada laravel, kemungkinan keys nya masih yang lama, harus di hapus pada .env file
+dan regerate pakai command php artisan keys:generate
+
+wajib di setting file permission nya laravel setelah pindah ke vps :
+# Set permissions for directories (755)
+find . -type d -exec chmod 755 {} \;
+
+# Set permissions for files (644)
+find . -type f -exec chmod 644 {} \;
+
+perbarui SSL lets encrypt di centos7 CWP7 :
+webserver settings -> ssl certificates -> auto SSL -> centang cpanel saja -> install SSL
+
+tips laravel :
+cari route tertentu 
+php artisan route:list | findstr /C:"notifications"
