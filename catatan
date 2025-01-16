@@ -1,0 +1,46 @@
+catatan buat besok kalo gk sempet :
+This error indicates that the PostgreSQL driver for PHP (pgsql) is not installed in your PHP 8.3 installation. Let's install it:
+
+1. First, install PostgreSQL development files:
+```bash
+yum install -y postgresql-devel
+```
+
+2. We need to recompile PHP 8.3 with PostgreSQL support. Go back to the source directory:
+```bash
+cd /usr/local/src/php-8.3.0
+
+./configure --enable-fpm \
+  --with-openssl \
+  --with-curl \
+  --with-zlib \
+  --enable-mbstring \
+  --enable-gd \
+  --with-jpeg \
+  --with-zip \
+  --with-pdo-mysql \
+  --with-mysqli \
+  --with-mysql-sock \
+  --enable-bcmath \
+  --with-pgsql \
+  --with-pdo-pgsql \
+  --prefix=/usr/local/php83
+```
+
+3. Compile and install:
+```bash
+make && make install
+```
+
+4. Restart PHP-FPM:
+```bash
+systemctl restart php83-fpm
+```
+
+5. You can verify the PostgreSQL extension is loaded:
+```bash
+/usr/local/php83/bin/php -m | grep pdo
+/usr/local/php83/bin/php -m | grep pgsql
+```
+
+Let me know if you need any clarification or run into other issues!
