@@ -84,3 +84,9 @@ cara setting web pakai SSL yang di generate default lets encrypt apache :
       ```
 
 By following these steps, you should be able to resolve the configuration error and successfully run Nginx on port 8080 with SSL.
+
+
+
+check kalo server blocking specified port :
+sudo tail -n 50 /var/log/messages
+bisa dilihat dari log
