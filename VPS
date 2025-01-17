@@ -90,3 +90,14 @@ By following these steps, you should be able to resolve the configuration error 
 check kalo server blocking specified port :
 sudo tail -n 50 /var/log/messages
 bisa dilihat dari log
+
+
+kalo masih gk bisa kebuka di port yang nginx running kemungkinan di blok firewall, carabuka nya :
+sudo iptables -I INPUT -p tcp --dport 8081 -j ACCEPT
+sudo service iptables save
+
+cara cek list firewall yang di blok dan tidak :
+sudo iptables -L -n -v
+yang ACCEPT misal :
+ 1331 74496 ACCEPT     tcp  --  !lo    *       0.0.0.0/0            0.0.0.0/0            ctstate NEW tcp dpt:2082
+itu berarti port nya terbuka bisa di akses publik
