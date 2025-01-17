@@ -101,3 +101,11 @@ sudo iptables -L -n -v
 yang ACCEPT misal :
  1331 74496 ACCEPT     tcp  --  !lo    *       0.0.0.0/0            0.0.0.0/0            ctstate NEW tcp dpt:2082
 itu berarti port nya terbuka bisa di akses publik
+
+
+
+cara check server nginx sudah menggunakan php-fpm :
+ curl -k https://localhost:8081
+
+kalau ada  upstream: "fastcgi://127.0.0.1:9083" berarti sudah menggunaakan php-fpm
+
