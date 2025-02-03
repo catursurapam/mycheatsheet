@@ -1,0 +1,7 @@
+kalau ada error pada saat create new row :
+SQLSTATE[23505]: Unique violation: 7 ERROR:  duplicate key value violates unique constraint "performance_review_evaluations_pkey"
+
+    DETAIL:  Key (id)=(7) already exists. (SQL: insert into "performance_review_evaluations" ("performance_review_evaluation_grade_id", "performance_review_question_id", "weight", "branch_id", "updated_at", "created_at") values (7, 47, 80, 28, 2025-02-03 13:12:45, 2025-02-03 13:12:45) returning "id")
+dengan database postgresql
+bisa di reset dengan cara :
+SELECT setval('performance_review_evaluations_id_seq', (SELECT MAX(id) FROM performance_review_evaluations));
