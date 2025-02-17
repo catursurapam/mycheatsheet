@@ -1,0 +1,48 @@
+when i opening this https://pilar.asia/storage/app/pdfs/testing.pdf
+
+404 not found
+
+
+Let's troubleshoot the storage access issue. The file path in the URL suggests you're trying to access /storage/app/pdfs/testing.pdf, but with the Laravel storage setup, you should be able to access it simply as /storage/pdfs/testing.pdf.
+
+Let's fix this:
+
+First, check your file location:
+bash
+
+Copy
+# Check if file exists in the correct location
+ls /home/pilarasi/pilarasia-v2/storage/app/public/pdfs/testing.pdf
+Ensure the symbolic link is correctly set up:
+bash
+
+Copy
+# Remove existing storage link in public_html if any
+rm -rf /home/pilarasi/public_html/storage
+
+# Create new symbolic link
+ln -s /home/pilarasi/pilarasia-v2/storage/app/public /home/pilarasi/public_html/storage
+Check permissions:
+bash
+
+Copy
+# Set correct permissions
+chmod 755 /home/pilarasi/public_html/storage
+chmod 644 /home/pilarasi/pilarasia-v2/storage/app/public/pdfs/testing.pdf
+After doing this, you should be able to access your file at:
+
+
+Copy
+https://pilar.asia/storage/pdfs/testing.pdf
+If still not working, verify:
+
+The file is actually in the public storage directory
+The symbolic link is correctly created
+All directories have proper permissions
+The web server has read access to the file
+You can check the symbolic link with:
+
+bash
+
+Copy
+ls -l /home/pilarasi/public_html/storage
